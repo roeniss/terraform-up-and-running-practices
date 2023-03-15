@@ -1,0 +1,4 @@
+- `tflint` : Slightly different from `terraform validate`. So why not?
+- `checkov` : Static checker for security issues
+- `terraform-docs` : See result from [README.md](./README.md)
+- `infracost` : Useful. Until run this, I didn't know that terraform aws_launch_configuration enable "ec2 detailed monitoring" by default
