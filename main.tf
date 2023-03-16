@@ -25,7 +25,7 @@ variable "server_port" {
   default     = 8080
 }
 
-resource "aws_launch_configuration" {
+resource "aws_launch_configuration" "example" {
   image_id        = "ami-00eeedc4036573771"
   instance_type   = "t2.micro"
   security_groups = [aws_security_group.instance.id]
