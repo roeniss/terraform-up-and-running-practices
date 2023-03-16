@@ -9,6 +9,6 @@
 
 - `act` : local github action testing tool. Would be better if my laptop is faster than now...
 
-- `terrastate` : vscode ext, not checked but looks good.
-
+- `terrastate` : vscode ext, not tried  but looks good.
+- `atlantis` : not tried because looks heavy (kube helm? no...) but maybe useful.
 
