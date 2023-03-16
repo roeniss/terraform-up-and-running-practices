@@ -12,5 +12,5 @@ jobs:
         uses: dflook/terraform-validate@v1
 
       - name: Validate failed
-        if: ${{ failure() && steps.validate.outputs.failure-reason == 'validate-failed' }}
-        run: echo "terraform validate failed. failure-reason: " ${{steps.validate.outputs.failure-reason}}
+        if: ${{ failure() }}
+        run: echo "terraform validate failed. failure-reason=${{ steps.validate.outputs.failure-reason}}"
