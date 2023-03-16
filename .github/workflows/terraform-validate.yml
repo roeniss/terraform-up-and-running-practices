@@ -13,4 +13,4 @@ jobs:
 
       - name: Validate failed
         if: ${{ failure() && steps.validate.outputs.failure-reason == 'validate-failed' }}
-        run: echo "terraform validate failed. failure-reason: " ${{steps.validate.outputs.failure-reason}}"
+        run: echo "terraform validate failed. failure-reason: " ${{steps.validate.outputs.failure-reason}}
