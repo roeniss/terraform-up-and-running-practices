@@ -4,7 +4,7 @@ output "subnet_ids" {
 }
 
 output "alb_domain" {
-  value       = aws_lb.example.dns_name
+  value       = aws_lb.default.dns_name
   description = "ALB DNS name"
 }
 
@@ -18,4 +18,10 @@ output "rds_port" {
   description = "port of the RDS instance"
 }
 
+output "asg_name" { 
+  value = aws_autoscaling_group.default.name
+}
 
+output "alb_security_group_id" {
+  value = aws_security_group.alb.id
+}

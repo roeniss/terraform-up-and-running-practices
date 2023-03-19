@@ -1,7 +1,7 @@
 terraform {
   backend "s3" {
     bucket         = "terraform-up-and-running-state-jkhqwef"
-    key            = "stage/data-stores/mysql/terraform.tfstate"
+    key            = "prod/data-stores/mysql/terraform.tfstate"
     region         = "us-east-2"
     dynamodb_table = "terraform-up-and-running-locks-jkhqwef"
     encrypt        = true
@@ -25,5 +25,5 @@ resource "aws_db_instance" "example" {
 }
 
 # data "aws_secretsmanager_secret_version" "db_password" {
-#   secret_id = "mysql-master-password-stage"
+#   secret_id = "mysql-master-password-prod"
 # }
