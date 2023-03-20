@@ -31,3 +31,19 @@ variable "min_size" {
 variable "max_size" {
   type = number
 }
+
+variable "custom_tags" {
+	description = "values to be added to the tags"
+	type = map(string)
+	default = {}
+}
+
+variable "enable_autoscaling" {
+	default = false
+  type = bool
+}
+
+variable "server_text" {
+  type = string
+  default = "server_text"
+}

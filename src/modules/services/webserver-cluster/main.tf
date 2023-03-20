@@ -47,6 +47,7 @@ data "template_file" "user_data" {
     server_port = var.server_port
     db_address = data.terraform_remote_state.db.outputs.address
     db_port    = data.terraform_remote_state.db.outputs.port
+    server_text = var.server_text
   }
 }
 
@@ -63,6 +64,8 @@ resource "aws_launch_configuration" "default" {
 }
 
 resource "aws_autoscaling_group" "default" {
+  name = "${var.cluster_name}-${aws_launch_configuration.default.name}"
+  # name = "${var.cluster_name}-"
   launch_configuration = aws_launch_configuration.default.id
   vpc_zone_identifier  = data.aws_subnet_ids.default.ids
 
@@ -72,12 +75,46 @@ resource "aws_autoscaling_group" "default" {
   min_size = var.min_size
   max_size = var.max_size
 
+  # min_elb_capacity = var.min_size
+
   tag {
     key                 = "Name"
     value               = "${var.cluster_name}-asg-default"
     propagate_at_launch = true
   }
 
+  dynamic "tag" {
+    for_each = {
+      for key, value in var.custom_tags : key => upper(value) if key != "Name"
+    }
+    content {
+      key                 = tag.key
+      value               = tag.value
+      propagate_at_launch = true
+    }
+  }
+}
+
+resource "aws_autoscaling_schedule" "scale_out_during_business_hours" {
+	count = var.enable_autoscaling ? 1 : 0
+
+	autoscaling_group_name = aws_autoscaling_group.default.name
+	scheduled_action_name = "scale-out-during-business-hours"
+	min_size = 2
+	max_size = 10
+	desired_capacity = 10
+	recurrence = "0 9 * * * "
+}
+
+resource "aws_autoscaling_schedule" "scale_in_during_night" {
+	count = var.enable_autoscaling ? 1 : 0
+
+	autoscaling_group_name = aws_autoscaling_group.default.name
+	scheduled_action_name = "scale-in-during-night"
+	min_size = 2
+	max_size = 10
+	desired_capacity = 2
+	recurrence = "0 17 * * * "
 }
 
 
